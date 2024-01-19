@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listas Encadeadas em C</title>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+
+<body>
+    <h1 class="LE">Listas Encadeadas</h1>
+    <div id="conceito">
+        <p>Uma Lista Encadeada é um sequência de objetos, lembrando, todos do mesmo tipo, na memória.
+            Cada objeto da sequência é armazenado em uma célula da lista: o primeiro elemento na primeira célula, o
+            segundo na segunda e continua.
+            Veja um exemplo na imagem abaixo:
+        </p>
+        <img src="/Listas Encadeadas/Site Contéudo/imagens/img1.png" alt="Abstração 1">
+        <p>Veja que cada célula guarda consigo um valor e ela aponta para a seguinte! Guarde bem esse conceito inicial
+            pois é a estrutura básica de uma lista encadeada.
+            ESTRUTURA: Guarda o valor do objeto e "aponta" para a próxima célula.
+        </p>
+        <p>A explicação irá conter tópicos com exemplos práticos e códigos, além de um projeto feito por mim que foi
+            produzido com o andamento de cada tópico.</p>
+    </div>
+
+    <h2 class="sumario">Sumário</h2>
+    <p>Acompanhe o sumário com cada tópico:</p>
+    <div id="sumario">
+        <ul>
+            <li><a href="">Estrutura da Lista Encadeada</a></li>
+            <li><a href="">Endereço de uma LE(Lista Encadeada)</a></li>
+            <li><a href="">Problemas 1</a></li>
+            <li><a href="">Busca em uma lista concatenada</a></li>
+            <li><a href="">Problemas 2</a></li>
+            <li><a href="">Cabeça da Lista</a></li>
+        </ul>
+    </div>
+
+    <h2>Estrutura da Lista Encadeada</h2>
+    <div id="estrutura">
+        <p>Apenas recapitulando a parte inicial, Lista Encadeadas é uma sequência de células; cada célula contém um
+            objeto(Lembrando que todos do mesmo tipo)
+            e o endereço da célula seguinte. Então, abaixo veja o código da declaração da Estrutura da Lista.
+        </p>
+
+        <div class="code1">
+            <pre>
+                 <code>
+                    struct lista {
+                           int valor;//Ou seja, o contéudo da célula, o seu valor.
+                           struct lista *proximo;//"Aponta", ponteiro.
+                    };
+                 </code>
+           </pre>
+        </div>
+        <p>Explicação do Código: Registramos uma nova estrutura, ou se desejar, Declaramos uma nova Estrutura, com o valor da célula e a seta que 
+            aponta pro próximo termo que é um Ponteiro.</p>
+            <p><br>Veja novamente na imagem abaixo que a célula 1 está apontando para a célula 2 e assim sucessivamente.</p>
+            <img src="/Listas Encadeadas/Site Contéudo/imagens/img1.png" alt="Abstração 1">
+    
+            <p><br><br>É conveniente tratar as células da lista como um novo tipo-de-dados (typedef):</p>
+            <pre><code>typedef struct lista celula; //Celula</code></pre>
+    
+            <p><br>Vamos um pouco mais longe, digamos então que declararemos uma célula e um ponteiro para a célula.</p>
+            <pre><code>
+            celula c;//Célula c
+            celula *p;//Ponteiro p
+            </code></pre>
+            <p><br>Ok, declaramos as variáveis, se c é uma célula então c.valor é o contéudo(a variável valor da nossa estrutura), e c.proximo é o endereço de memória da próxima célula.
+            Se p é um ponteiro, então, p->valor é o contéudo da célula e p->proximo aponta pra próxima célula, E quando chegar na última célula ela irá apontar pra NULL,
+            pois não há nada. Então, a última célula é se e somente se p->proximo == NULL.</p>
+    
+            <img src="/Listas Encadeadas/Site Contéudo/imagens/img2.png" alt="Abstração 2">
+    </div>
+
+    <h2>Endereço de uma Lista Encadeada</h2>
+    <div id="endereco">
+        <p>O endereço de uma lista encadeada é o endereço de sua primeira célula. <strong>Considere que le é lista encadeada.</strong>
+        A lista está vazia se e somente le == NULL, isso quer dizer, a lista não possui células.</p>
+
+        <p>OBSERVAÇÃO: Listas são tendeciosas a funções e procedimentos recursivos, e os algoritmos de lista encadeada ficam mais simples, otimizados com 
+            chamadas recursivas, ademais, é fácil manipular listas recursivamente e você verá ao longo dos problemas e exemplos práticos.</p>
+
+        
+
+    </div>
+
+
+    
+</body>
+
+</html>
