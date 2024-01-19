@@ -47,11 +47,11 @@ void lerElementos(int num, struct TipoLista *p){
 void imprimeElementos(struct TipoLista *p){
 	int i;
 	struct TipoLista *temp = p->proximo;//Criando um novo ponteiro que recebe o endereço de memória do início da TipoLista, ou seja, o elemento 1.
-	printf("Elementos da Lista: ");
+	printf("\nElementos da Lista: ");
 	while(temp != NULL){//O loop acaba no ultimo termo, já que ele irá apontar para um endereço de memória do tipo NULL.
 		printf("%d ", temp->valor);
 		temp = temp->proximo;
-	}
+	} printf("\n");//Adiciona um quebra de linha ao fim da impressão.
 }
 
 //Procedimento que insere novas células na Lista Encadeada
@@ -61,6 +61,10 @@ void insere(int x, struct TipoLista *p){
 	nova->valor = x;//Recebendo o valor da celula.
 	nova->proximo = p->proximo;//Insere o novo nó no início da lista.
 	p->proximo = nova;//Alterando a cabeça da lista.
+}
+
+lista* copiaLista(struct TipoLista *p){
+
 }
 int main(){
 	//Declarando variaveis
@@ -75,14 +79,52 @@ int main(){
 	scanf("%d", &num);
 
 	//Chamando procedimento adicionar Elementos
-	adicionaElementos(num, le);
+	lerElementos(num, le);
 
 	//Chamando procedimento imprimir Elementos
-	lerElementos(num, le);
+	imprimeElementos(le);
 	
 	printf("\n\n\n");
-	printf("Agora voce pode fazer algumas operacoes com a TipoLista e ver como funciona as funcoes pelo codigo e o que cada um faz.\n");
-	printf("A - Calcula a altura de um elemento x da TipoLista.\n B - Calcula a profundidade de um elemento x da TipoLista.\n");
+
+	char letra;//Declarandi variavel de controle do laço.
+	while(letra != 'z'){
+		printf("Agora voce pode fazer algumas operacoes com a TipoLista e ver como funciona as funcoes pelo codigo e o que cada um faz.\n");
+	    printf("a - Inserir uma nova celula na lista.\n");
+	    printf("b - Remove uma celula da lista.\n");
+	    printf("c - Calcula a altura de um elemento x da TipoLista.\n");
+	    printf("d - Calcula a profundidade de um elemento x da TipoLista.\n");
+		fflush(stdin);//Limpar buffer do teclado.
+		scanf("%c", &letra);
+		//Condições de acordo com a escolha do usuário.
+		switch (letra) {
+        case 'a':
+            printf("Insira, por favor, o valor da nova celula: ");
+			scanf("%d", &num);
+			printf("Antes de inserir a nova celula - ");
+			imprimeElementos(le);
+			printf("Depois da insercao da celula: ");
+			insere(num, le);
+			imprimeElementos(le);
+            break;
+        case 'b':
+            printf("Você digitou a letra 'b'.\n");
+            break;
+        case 'c':
+            printf("Você digitou a letra 'c'.\n");
+            break;
+        case 'd':
+            printf("Você digitou a letra 'd'.\n");
+            break;
+        case 'e':
+            printf("Você digitou a letra 'e'.\n");
+            break;
+        default:
+            printf("Opção inválida.\n");
+            break;
+    }
+		
+	}
+	
 	
 	//IMPLEMENTAR BUSCA DE UM ELEMENTO X, INSER��O EM UMA LISTA J� CRIADA, REMO��O EM UMA LISTA J� CRIADA, BUSCA E REMOVE, BUSCA E INSERE. 
 	return 0;
