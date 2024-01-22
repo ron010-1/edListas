@@ -68,12 +68,17 @@ void insere(int x, struct TipoLista *p){
 
 //Função que copia a lista e retorna uma nova lista com as mesmas células.
 void copiaLista(struct TipoLista *p, struct TipoLista *c){
-	const struct TipoLista *listaOriginal = p;
-	while(listaOriginal != NULL){
-		insere(listaOriginal->valor, &c);
-		listaOriginal = listaOriginal->proximo;
-	} 
-	imprimeElementos(c);
+	if(p == NULL){
+		return;
+	}else{
+		//A estrutura abaixo é quase a mesma do procedimeno insere.
+		struct TipoLista *nova; //Declarando uma nova estrutura lista com o nome nova, de nova celula
+	    nova = malloc(sizeof(lista));//Alocando memória de acordo com o tamanho da estrutura.
+	    nova->valor = p->valor;//Recebendo o valor da celula.
+	    nova->proximo = c->proximo;//Insere o novo nó no início da lista.
+	    c->proximo = nova;//Alterando a cabeça da lista.
+	    copiaLista(p->proximo, c);
+	}
 }
 
 int main(){
@@ -111,6 +116,7 @@ int main(){
 		struct TipoLista *novaLista;
 		novaLista = malloc(sizeof(lista));
 		novaLista->proximo = NULL;
+
 		switch (letra) {
         case 'a':
             printf("Insira, por favor, o valor da nova celula: ");
@@ -131,7 +137,8 @@ int main(){
             printf("Voce digitou a letra 'd'.\n");
             break;
         case 'e':
-            copiaLista(le, novaLista);
+		    //A função le já é enviada para a posição 0 pra evitar que pegue algum lixo de memória.
+            copiaLista(le->proximo, novaLista);
 			printf("Lista 'le' : ");
 			imprimeElementos(le);
 			printf("\n");
