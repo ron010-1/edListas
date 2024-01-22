@@ -3,10 +3,13 @@
 #define NULL ((void *)0)
 
 // Criando a estrutura do tipo Lista
-typedef struct TipoLista{
+struct TipoLista{
 		int valor;
 		struct TipoLista *proximo;
-}lista;
+};
+
+// Definindo do tipo "lista".
+typedef struct TipoLista lista;
 
 //Função que calcula o número de objetos da TipoLista.
 int contaElementos(struct TipoLista *p){
@@ -63,9 +66,16 @@ void insere(int x, struct TipoLista *p){
 	p->proximo = nova;//Alterando a cabeça da lista.
 }
 
-lista* copiaLista(struct TipoLista *p){
-
+//Função que copia a lista e retorna uma nova lista com as mesmas células.
+void copiaLista(struct TipoLista *p, struct TipoLista *c){
+	const struct TipoLista *listaOriginal = p;
+	while(listaOriginal != NULL){
+		insere(listaOriginal->valor, &c);
+		listaOriginal = listaOriginal->proximo;
+	} 
+	imprimeElementos(c);
 }
+
 int main(){
 	//Declarando variaveis
 	int num, i;
@@ -93,9 +103,14 @@ int main(){
 	    printf("b - Remove uma celula da lista.\n");
 	    printf("c - Calcula a altura de um elemento x da TipoLista.\n");
 	    printf("d - Calcula a profundidade de um elemento x da TipoLista.\n");
+		printf("e - Copia a lista\n");
 		fflush(stdin);//Limpar buffer do teclado.
 		scanf("%c", &letra);
 		//Condições de acordo com a escolha do usuário.
+        
+		struct TipoLista *novaLista;
+		novaLista = malloc(sizeof(lista));
+		novaLista->proximo = NULL;
 		switch (letra) {
         case 'a':
             printf("Insira, por favor, o valor da nova celula: ");
@@ -107,19 +122,27 @@ int main(){
 			imprimeElementos(le);
             break;
         case 'b':
-            printf("Você digitou a letra 'b'.\n");
+            printf("Voce digitou a letra 'b'.\n");
             break;
         case 'c':
-            printf("Você digitou a letra 'c'.\n");
+            printf("Voce digitou a letra 'c'.\n");
             break;
         case 'd':
-            printf("Você digitou a letra 'd'.\n");
+            printf("Voce digitou a letra 'd'.\n");
             break;
         case 'e':
-            printf("Você digitou a letra 'e'.\n");
+            copiaLista(le, novaLista);
+			printf("Lista 'le' : ");
+			imprimeElementos(le);
+			printf("\n");
+			printf("Lista 'novaLista' : ");
+			imprimeElementos(novaLista);
+            break;
+		case 'f':
+            printf("Voce digitou a letra 'e'.\n");
             break;
         default:
-            printf("Opção inválida.\n");
+            printf("Opçao invalida.\n");
             break;
     }
 		
