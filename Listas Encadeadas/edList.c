@@ -128,13 +128,13 @@ int main(){
 			imprimeElementos(le);
             break;
         case 'b':
-            printf("Voce digitou a letra 'b'.\n");
+            //REMOVE UM ELEMENTO X DA LISTA
             break;
         case 'c':
-            printf("Voce digitou a letra 'c'.\n");
+            //ALTURA DE UM ELEMENTO
             break;
         case 'd':
-            printf("Voce digitou a letra 'd'.\n");
+            //PROFUNDIDADE DE UM ELEMENTO NA LISTA
             break;
         case 'e':
 		    //A função le já é enviada para a posição 0 pra evitar que pegue algum lixo de memória.
@@ -146,7 +146,7 @@ int main(){
 			imprimeElementos(novaLista);
             break;
 		case 'f':
-            printf("Voce digitou a letra 'e'.\n");
+            //BUSCA E INSERE
             break;
         default:
             printf("Opçao invalida.\n");
