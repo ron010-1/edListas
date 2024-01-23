@@ -125,16 +125,19 @@ int main(){
 
 	char letra;//Declarandi variavel de controle do laço.
 	while(letra != 'z'){
-		printf("\n\nAgora voce pode fazer algumas operacoes com a TipoLista e ver como funciona as funcoes pelo codigo e o que cada um faz.\n");
+		printf("\nAgora voce pode fazer algumas operacoes com a TipoLista e ver como funciona as funcoes pelo codigo e o que cada um faz.\n");
 	    printf("a - Inserir uma nova celula na lista.\n");
 	    printf("b - Remove uma celula da lista.\n");
 	    printf("c - Calcula a altura de um elemento x da TipoLista.\n");
 	    printf("d - Calcula a profundidade de um elemento x da TipoLista.\n");
-		printf("e - Copia a lista\n");
+		printf("e - Copia a lista.\n");
+		printf("f - Procurar um valor x na Lista.\n");
+		printf("z - Encerra o programa.\n");
 		fflush(stdin);//Limpar buffer do teclado.
 		scanf("%c", &letra);
 		//Condições de acordo com a escolha do usuário.
         
+		//Apenas as configurações iniciais para caso o usuário solicitar a opção de Copiar a lista.
 		struct TipoLista *novaLista;
 		novaLista = malloc(sizeof(lista));
 		novaLista->proximo = NULL;
@@ -183,8 +186,12 @@ int main(){
 		case 'f':
             //BUSCA E INSERE
             break;
+		case 'z':
+		    printf("Muito obrigado por participar dos meus estudos em C.\nGratidao, pequeno gafanhoto. GG.\n");
         default:
-            printf("Opçao invalida.\n");
+		if(letra != 'z'){
+			printf("\nVoce inseriu uma tecla que nao apresenta funcao.\n");
+		}
             break;
     }
 		
