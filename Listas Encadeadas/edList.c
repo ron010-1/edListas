@@ -34,7 +34,7 @@ int profundidade(struct TipoLista *p, struct TipoLista *c){
 }
 
 //Procedimento que adiciona elementos a minha Lista Encadeada de acordo com o numero digitado pelo usuario.
-void lerElementos(int num, struct TipoLista *p){
+void lerCelulas(int num, struct TipoLista *p){
 	int i, variavelAuxiliar;
 	for(i=0; i<num; i++){
 		struct TipoLista *NovoNo = malloc(sizeof(lista));
@@ -47,7 +47,7 @@ void lerElementos(int num, struct TipoLista *p){
 }
 
 //Procedimento que imprime todos os elementos da TipoLista.
-void imprimeElementos(struct TipoLista *p){
+void imprimeLista(struct TipoLista *p){
 	int i;
 	struct TipoLista *temp = p->proximo;//Criando um novo ponteiro que recebe o endereço de memória do início da TipoLista, ou seja, o elemento 1.
 	printf("\nElementos da Lista: ");
@@ -81,9 +81,31 @@ void copiaLista(struct TipoLista *p, struct TipoLista *c){
 	}
 }
 
+//Procedimento para remover celula com valor x, mas sem cabe�a. POINTER TO POINTER FUNCTION.
+void removeCelula(struct TipoLista *p, int x){
+	struct TipoLista *anterior = NULL;
+	struct TipoLista *atual = p;
+	
+	//Laço para encontrar o anterior da célula com valor x.
+	while(atual != NULL && atual->valor != x){
+		anterior = atual;//Atualizando o ponteiro anterior.
+		atual = atual->proximo;//Atualiza o ponteiro p pra próxima célula.
+	}
+	//Se encontrou o valor x.
+	if(atual != NULL){
+		//Se o nó não é primeiro
+		if(anterior !=NULL){
+			anterior->proximo = atual->proximo;
+		}else{ //Se o nó é o primeiro
+			p = atual->proximo;
+		}
+	}
+	free(atual);
+}
+
 int main(){
 	//Declarando variaveis
-	int num, i;
+	int num, i, contador=0;
 	// Inicializar a TipoLista vazia e um ponteiro.
     struct TipoLista *le; //Estrutura do Tipo Lista nome: le representa a HEAD da Lista Encadeada, que é um ponteiro que INDICA O INÍCIO DA LISTA.
 	le = malloc(sizeof (lista));//A função malloc aloca a memória dinamicamente para um novo nó da LE. O sizeof informa o numero de bytes necessários.
@@ -94,16 +116,16 @@ int main(){
 	scanf("%d", &num);
 
 	//Chamando procedimento adicionar Elementos
-	lerElementos(num, le);
+	lerCelulas(num, le);
 
 	//Chamando procedimento imprimir Elementos
-	imprimeElementos(le);
+	imprimeLista(le);
 	
 	printf("\n\n\n");
 
 	char letra;//Declarandi variavel de controle do laço.
 	while(letra != 'z'){
-		printf("Agora voce pode fazer algumas operacoes com a TipoLista e ver como funciona as funcoes pelo codigo e o que cada um faz.\n");
+		printf("\n\nAgora voce pode fazer algumas operacoes com a TipoLista e ver como funciona as funcoes pelo codigo e o que cada um faz.\n");
 	    printf("a - Inserir uma nova celula na lista.\n");
 	    printf("b - Remove uma celula da lista.\n");
 	    printf("c - Calcula a altura de um elemento x da TipoLista.\n");
@@ -122,16 +144,29 @@ int main(){
             printf("Insira, por favor, o valor da nova celula: ");
 			scanf("%d", &num);
 			printf("Antes de inserir a nova celula - ");
-			imprimeElementos(le);
+			imprimeLista(le);
 			printf("Depois da insercao da celula: ");
 			insere(num, le);
-			imprimeElementos(le);
+			imprimeLista(le);
             break;
         case 'b':
-            //REMOVE UM ELEMENTO X DA LISTA
+            printf("Insira, por favor, o valor da celula que voce deseja remover: ");
+			scanf("%d", &num);
+			printf("\nEssa eh a lista antes da remocao: ");
+			imprimeLista(le);
+			removeCelula(le, num);
+			printf("Essa eh a lista apos a remocao: ");
+			imprimeLista(le);
             break;
         case 'c':
-            //ALTURA DE UM ELEMENTO
+            printf("Insira, por favor, o valor da celula que voce deseja saber a altura: ");
+			scanf("%d", &num);
+			while(le != NULL && le->valor != num){
+				contador++;
+				le = le->proximo;
+			}
+			int h = altura(le);
+			printf("A altura da celula %d eh %d\n", contador, h);
             break;
         case 'd':
             //PROFUNDIDADE DE UM ELEMENTO NA LISTA
@@ -140,10 +175,10 @@ int main(){
 		    //A função le já é enviada para a posição 0 pra evitar que pegue algum lixo de memória.
             copiaLista(le->proximo, novaLista);
 			printf("Lista 'le' : ");
-			imprimeElementos(le);
+			imprimeLista(le);
 			printf("\n");
 			printf("Lista 'novaLista' : ");
-			imprimeElementos(novaLista);
+			imprimeLista(novaLista);
             break;
 		case 'f':
             //BUSCA E INSERE

@@ -1,12 +1,18 @@
+//Nesse repositória está as resoluções das questões da lista de Exercícios fornecidos na página.
+
 #include<stdio.h>
 
+//Definindo a minha estrutura do TipoLista
 struct TipoLista{
 		int valor;
 		struct lista *proximo;
 };
 
+//Definindo o nome lista pra chamar minha estrutura.
 typedef struct TipoLista lista;
 
+
+//Função que conta o número de células de uma lista
 int contaCelulas(struct TipoLista *p){
 	if(p == NULL){
 		return 0;
@@ -14,18 +20,21 @@ int contaCelulas(struct TipoLista *p){
 	return 1 + contaCelulas(p->proximo);
 }
 
+//Função que calcula a altura de uma célula dentro da lista.
 int altura(struct TipoLista *c){
 	if(c == NULL){
 		return 0;
 	}return 1 + altura(c->proximo);
 }
 
+//Função que calcula a profundidade de um célula x dentro da lista.
 int profundidade(struct TipoLista *p, struct lista *c){
 	if(p == c){
 		return 1;
 	}return 1 + profundidade(p->proximo, c);
 }
 
+//Procedimento que ajuda a ler os valores e ajustar os ponteiros na criação de novas células.
 void lerElementos(int num, struct TipoLista *p){
 	int i, variavelAuxiliar;
 	for(i=0; i<num; i++){
@@ -38,6 +47,7 @@ void lerElementos(int num, struct TipoLista *p){
 	}
 }
 
+//Procedimento que imprime as células da lista.
 void imprimeElementos(struct TipoLista *p){
 	struct TipoLista *temp = p->proximo;//Criando um novo ponteiro que recebe o endereÃ§o de memÃ³ria do inÃ­cio da TipoLista, ou seja, o elemento 1.
 	printf("\nElementos da Lista: ");
@@ -68,6 +78,7 @@ void insereAposK(struct TipoLista *p, int x, int k){
 	}	
 }
 
+//Procedimento que troca duas células pelo seu valor, x e y.
 void trocaCelulas(struct TipoLista *p, int x, int y){
 	struct TipoLista *celulaX = NULL;
 	struct TipoLista *celulaY = NULL;
@@ -86,13 +97,51 @@ void trocaCelulas(struct TipoLista *p, int x, int y){
 	celulaY->valor = variavelAuxiliar;
 }
 
+//Procedimento que inverte a lista, o primeiro se torna o último, o segundo o penúltimo...
+void inverteLista(struct TipoLista *p){
+	if(p == NULL){
+		return;
+	}else{
+		//A estrutura abaixo é quase a mesma do procedimeno insere.
+		struct TipoLista *nova; //Declarando uma nova estrutura lista com o nome nova, de nova celula
+	    nova = malloc(sizeof(lista));//Alocando memória de acordo com o tamanho da estrutura.
+	    nova->valor = p->valor;//Recebendo o valor da celula.
+	    nova->proximo = p->proximo;//Insere o novo nó no início da lista.
+	    p->proximo = nova;//Alterando a cabeça da lista.
+	    copiaLista(p->proximo);
+	}
+}
+
+//Procedimento para remover celula com valor x, mas sem cabe�a. POINTER TO POINTER FUNCTION.
+void removeCelula(struct TipoLista **p, int x){
+	struct TipoLista *anterior = NULL;
+	struct TipoLista *atual = *p;
+	
+	//Laço para encontrar o anterior da célula com valor x.
+	while(atual != NULL && atual->valor != x){
+		anterior = atual;//Atualizando o ponteiro anterior.
+		atual = atual->proximo;//Atualiza o ponteiro p pra próxima célula.
+	}
+
+	//Se encontrou o valor x.
+	if(atual != NULL){
+		//Se o nó não é primeiro
+		if(anterior !=NULL){
+			anterior->proximo = atual->proximo;
+		}else{ //Se o nó é o primeiro
+			*p = atual->proximo;
+		}
+	}
+	free(atual);
+}
+
 int main(){
 	//Declarando variaveis
 	int num, i;
 	// Inicializar a TipoLista vazia e um ponteiro.
-    struct TipoLista *le1; //Estrutura do Tipo Lista nome: le representa a HEAD da Lista Encadeada, que Ã© um ponteiro que INDICA O INÃCIO DA LISTA.
-	le1 = malloc(sizeof (lista));//A funÃ§Ã£o malloc aloca a memÃ³ria dinamicamente para um novo nÃ³ da LE. O sizeof informa o numero de bytes necessÃ¡rios.
-	le1->proximo = NULL; //Criando a head da TipoLista, que estÃ¡ vazia.
+    struct TipoLista *le1; //Estrutura do Tipo Lista nome: le representa a HEAD da Lista Encadeada, que a um ponteiro que INDICA O INÃCIO DA LISTA.
+	le1 = malloc(sizeof (lista));//A função malloc aloca a memória dinamicamente para um novo nó da LE. O sizeof informa o numero de bytes necessÃ¡rios.
+	le1->proximo = NULL; //Criando a cabeça da TipoLista, que está vazia.
 
 	struct TipoLista *le2;
 	le2 = malloc(sizeof(lista));
@@ -105,8 +154,8 @@ int main(){
 	//Chamando procedimento adicionar Elementos
 	lerElementos(num, le1);
 
-	printf("Chamando a funcao trocaCelula: \n");
-	trocaCelulas(le1, 2, 3);
+	printf("Chamando a funcao Remove celula: \n");
+	removeCelula(le1, 4);
 
 	imprimeElementos(le1);
 
