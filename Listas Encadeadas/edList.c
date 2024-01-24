@@ -105,7 +105,7 @@ void removeCelula(struct TipoLista *p, int x){
 
 int main(){
 	//Declarando variaveis
-	int num, i, contador=0;
+	int num, i;
 	// Inicializar a TipoLista vazia e um ponteiro.
     struct TipoLista *le; //Estrutura do Tipo Lista nome: le representa a HEAD da Lista Encadeada, que é um ponteiro que INDICA O INÍCIO DA LISTA.
 	le = malloc(sizeof (lista));//A função malloc aloca a memória dinamicamente para um novo nó da LE. O sizeof informa o numero de bytes necessários.
@@ -132,6 +132,7 @@ int main(){
 	    printf("d - Calcula a profundidade de um elemento x da TipoLista.\n");
 		printf("e - Copia a lista.\n");
 		printf("f - Procurar um valor x na Lista.\n");
+		printf("g - Busca e insere apos x.\n");
 		printf("z - Encerra o programa.\n");
 		fflush(stdin);//Limpar buffer do teclado.
 		scanf("%c", &letra);
@@ -165,14 +166,21 @@ int main(){
             printf("Insira, por favor, o valor da celula que voce deseja saber a altura: ");
 			scanf("%d", &num);
 			while(le != NULL && le->valor != num){
-				contador++;
 				le = le->proximo;
 			}
 			int h = altura(le);
-			printf("A altura da celula %d eh %d\n", contador, h);
+			printf("A altura da celula eh %d\n", h);
             break;
         case 'd':
-            //PROFUNDIDADE DE UM ELEMENTO NA LISTA
+		    //A variavel auxiliar é o início da lista, a primera célula, e a le é a célula que está o valor que o usuário inseriu.
+		    struct TipoLista *auxiliar = le; // AJEITAR, DECLARAR FORA DO SWITC.
+            printf("Insira, por favor, o valor da celula x que voce deseja calcular a profundidade: ");
+			scanf("%d", &num);
+			while(le != NULL && le->valor != num){
+				le = le->proximo;
+			}
+			int varProfundidade = profundidade(auxiliar, le);
+			printf("A profundidade da celula dentro da lista eh %d.\n", varProfundidade);
             break;
         case 'e':
 		    //A função le já é enviada para a posição 0 pra evitar que pegue algum lixo de memória.
@@ -184,8 +192,10 @@ int main(){
 			imprimeLista(novaLista);
             break;
 		case 'f':
-            //BUSCA E INSERE
+            //PROCURA VALOR NA LISTA
             break;
+		case 'g':
+		    //BUSCA E INSERE APÓS X.
 		case 'z':
 		    printf("Muito obrigado por participar dos meus estudos em C.\nGratidao, pequeno gafanhoto. GG.\n");
         default:
@@ -194,10 +204,6 @@ int main(){
 		}
             break;
     }
-		
 	}
-	
-	
-	//IMPLEMENTAR BUSCA DE UM ELEMENTO X, INSER��O EM UMA LISTA J� CRIADA, REMO��O EM UMA LISTA J� CRIADA, BUSCA E REMOVE, BUSCA E INSERE. 
 	return 0;
 }
