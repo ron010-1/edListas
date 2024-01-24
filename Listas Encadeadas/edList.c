@@ -103,9 +103,57 @@ void removeCelula(struct TipoLista *p, int x){
 	free(atual);
 }
 
+//Procedimento que busca uma celula e remove.
+// Função que busca e remove um elemento da lista
+void buscaERemove(int y, struct TipoLista *p) {
+   struct TipoLista *anterior = NULL;
+   struct TipoLista *atual = p->proximo; // Avança para o primeiro nó da lista
+   while (atual != NULL && atual->valor != y) {
+      anterior = atual;
+      atual = atual->proximo;
+   }
+   if (atual != NULL) {
+      anterior->proximo = atual->proximo;
+      free(atual);
+   }
+}
+
+// Procedimento que busca e insere uma célula antes de y
+void buscaEInsere(int x, int y, struct TipoLista *p) {
+   struct TipoLista *anterior = NULL;
+   struct TipoLista *atual = p->proximo; // Avança para o primeiro nó da lista
+   struct TipoLista *nova = malloc(sizeof(struct TipoLista));
+   if (nova == NULL) {
+      // Tratar erro de alocação de memória, se necessário
+      return;
+   }
+   nova->valor = x;
+
+   while (atual != NULL && atual->valor != y) {
+      anterior = atual;
+      atual = atual->proximo;
+   }
+   nova->proximo = atual;
+   anterior->proximo = nova;
+}
+
+//Função que retorna se um valor está na lista ou não.
+int procuraValor(int num, struct TipoLista *p){
+	int i, contador=0;
+	while(p->proximo != NULL && p->valor != num){
+		p = p->proximo;
+		contador++;
+	}
+	if(p->valor == num){
+		return contador;
+	}else{
+	    return 0; //False, nao encontrou o valor.
+	}
+}
+
 int main(){
 	//Declarando variaveis
-	int num, i;
+	int num, i, x, y;
 	// Inicializar a TipoLista vazia e um ponteiro.
     struct TipoLista *le; //Estrutura do Tipo Lista nome: le representa a HEAD da Lista Encadeada, que é um ponteiro que INDICA O INÍCIO DA LISTA.
 	le = malloc(sizeof (lista));//A função malloc aloca a memória dinamicamente para um novo nó da LE. O sizeof informa o numero de bytes necessários.
@@ -132,7 +180,8 @@ int main(){
 	    printf("d - Calcula a profundidade de um elemento x da TipoLista.\n");
 		printf("e - Copia a lista.\n");
 		printf("f - Procurar um valor x na Lista.\n");
-		printf("g - Busca e insere apos x.\n");
+		printf("g - Busca e insere x antes de y.\n");
+		printf("h - Busca e remove a primeira aparicao de y.\n");
 		printf("z - Encerra o programa.\n");
 		fflush(stdin);//Limpar buffer do teclado.
 		scanf("%c", &letra);
@@ -143,6 +192,7 @@ int main(){
 		novaLista = malloc(sizeof(lista));
 		novaLista->proximo = NULL;
 
+		struct TipoLista *auxiliar = le;
 		switch (letra) {
         case 'a':
             printf("Insira, por favor, o valor da nova celula: ");
@@ -173,7 +223,6 @@ int main(){
             break;
         case 'd':
 		    //A variavel auxiliar é o início da lista, a primera célula, e a le é a célula que está o valor que o usuário inseriu.
-		    struct TipoLista *auxiliar = le; // AJEITAR, DECLARAR FORA DO SWITC.
             printf("Insira, por favor, o valor da celula x que voce deseja calcular a profundidade: ");
 			scanf("%d", &num);
 			while(le != NULL && le->valor != num){
@@ -192,15 +241,38 @@ int main(){
 			imprimeLista(novaLista);
             break;
 		case 'f':
-            //PROCURA VALOR NA LISTA
+            printf("Insira um valor para buscar na lista: ");
+			scanf("%d", &num);
+			int var = procuraValor(num, le);
+			if(var == 0){
+				printf("Nao encontramos o valor %d dentro da lista.", num);
+			}else{
+				printf("A posicao do %d eh %d.\n\n", num, var);
+			}
             break;
 		case 'g':
-		    //BUSCA E INSERE APÓS X.
+		    printf("Insira o valor da celula y que voce desejar inserir x antes de y, e insira o valor de x: ");
+			scanf("%d%d", &y, &x);
+			printf("\nEssa eh a lista antes da insercao: ");
+			imprimeLista(le);
+			printf("\nEssa eh a lista apos a insercao: ");
+			buscaEInsere(x, y, le);
+			imprimeLista(le);
+			break;
+		case 'h':
+		    printf("Insira o valor da celula y que voce desejar remover: ");
+			scanf("%d",&y);
+			printf("\nEssa eh a lista antes da insercao: ");
+			imprimeLista(le);
+			printf("\nEssa eh a lista apos a insercao: ");
+			buscaERemove(y,le);
+			imprimeLista(le);
+			break;
 		case 'z':
 		    printf("Muito obrigado por participar dos meus estudos em C.\nGratidao, pequeno gafanhoto. GG.\n");
         default:
 		if(letra != 'z'){
-			printf("\nVoce inseriu uma tecla que nao apresenta funcao.\n");
+			printf("\nVoce inseriu uma tecla que nao apresenta escolha previa.\n");
 		}
             break;
     }

@@ -113,9 +113,9 @@ void inverteLista(struct TipoLista *p){
 }
 
 //Procedimento para remover celula com valor x, mas sem cabe�a. POINTER TO POINTER FUNCTION.
-void removeCelula(struct TipoLista **p, int x){
+void removeCelula(struct TipoLista  *p, int x){
 	struct TipoLista *anterior = NULL;
-	struct TipoLista *atual = *p;
+	struct TipoLista *atual = p;
 	
 	//Laço para encontrar o anterior da célula com valor x.
 	while(atual != NULL && atual->valor != x){
@@ -129,10 +129,29 @@ void removeCelula(struct TipoLista **p, int x){
 		if(anterior !=NULL){
 			anterior->proximo = atual->proximo;
 		}else{ //Se o nó é o primeiro
-			*p = atual->proximo;
+			p = atual->proximo;
 		}
 	}
 	free(atual);
+}
+
+//Procedimento Desalocar celula ITERATIVO.
+void desalocarCelula(struct TipoLista *p){
+	struct TipoLista *anterior = NULL;
+	struct TipoLista *atual = p;
+
+	while(atual != NULL){
+		anterior = atual;
+		atual = atual->proximo;
+     	free(anterior);
+	}
+}
+
+//Procedimento desalocar celula RECURSIVO
+void desalocarCelula(struct TipoLista *p){
+    if(p == NULL) return;
+    struct TipoLista *atual = p;
+    free(atual); desalocarCelula(p->proximo);
 }
 
 int main(){
