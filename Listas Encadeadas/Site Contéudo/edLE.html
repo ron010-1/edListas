@@ -50,9 +50,9 @@
         <div class="code1">
             <pre>
                  <code>
-                    struct lista {
+                    struct TipoLista {
                            int valor;//Ou seja, o contéudo da célula, o seu valor.
-                           struct lista *proximo;//"Aponta", ponteiro.
+                           struct TipoLista *proximo;//"Aponta", ponteiro.
                     };
                  </code>
            </pre>
@@ -85,7 +85,23 @@
         <p>OBSERVAÇÃO: Listas são tendeciosas à funções e à procedimentos recursivos, geralmente, os algoritmos de lista encadeada ficam mais simples, otimizados com 
             chamadas recursivas, ademais, é fácil manipular listas recursivamente e você verá ao longo dos problemas e exemplos práticos.</p>
 
-        
+        <pre><code>
+            //A seguinte função recursiva imrime o contéudo de uma lista encadeada le:
+              void imprime(TipoLista *le){
+                   if(le != NULL){
+                    printf("%d\n", le->conteudo);
+                    imprime(le->proximo);
+                   }
+              }
+
+            //Aqui a função Iterativa:
+              void imprime(TipoLista *le){
+                celula *p;
+                for(p=le; p!=NULL; p= p->proximo){
+                    printf("%d\n", p->conteudo);
+                }
+              }
+        </code></pre>
 
     </div>
 
