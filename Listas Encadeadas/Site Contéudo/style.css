@@ -1,4 +1,5 @@
 @import url('https://fonts.cdnfonts.com/css/helvetica-neue-5');
+
 * {
     margin: 0;
     padding: 0;
@@ -9,9 +10,32 @@ body {
     display: flex;
     flex-direction: column;
     margin-left: 12.5%;
-    width: 75%;
-    height: 50%;
-    gap: 50px;
-    background-color: #bfc5ca;
+    width: 900px;
+    height: 1080px;
+    gap: 80px;
+    background-color: #fffaf0;
     font-family: 'Helvetica Neue', sans-serif;
+    font-size: 18px;
+}
+code{
+    
+}
+header{
+    background-color: gray;
+    width: 750px;
+}
+p {
+    width: 860px;
+    line-height: 25px;
+    color: black;
+}
+a{
+    text-decoration: none;
+    color: blue;
+}
+mark{
+    background-color: #fbec5d;
+}
+#conceito{
+    column-gap: 10px;
 }

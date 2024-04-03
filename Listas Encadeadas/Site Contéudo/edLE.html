@@ -9,7 +9,10 @@
 </head>
 
 <body>
+    <header>aaa</header>
+
     <h1 class="LE">Listas Encadeadas</h1>
+
     <div id="conceito">
         <p>Uma Lista Encadeada é um sequência de objetos, lembrando, todos do mesmo tipo, na memória.
             Cada objeto da sequência é armazenado em uma célula da lista: o primeiro elemento na primeira célula, o
@@ -25,23 +28,24 @@
             produzido com o andamento de cada tópico.</p>
     </div>
 
-    <h2 class="sumario">Sumário</h2>
-    <p>Acompanhe o sumário com cada tópico:</p>
+    
     <div id="sumario">
+        <strong><p id="sumario">Sumário</p></strong>
         <ul>
             <li><a href="">Estrutura da Lista Encadeada</a></li>
             <li><a href="">Endereço de uma LE(Lista Encadeada)</a></li>
-            <li><a href="">Problemas 1</a></li>
-            <li><a href="">Busca em uma lista concatenada</a></li>
-            <li><a href="">Problemas 2</a></li>
+            <li><a href="">Busca em uma Lista Encadeada</a></li>
             <li><a href="">Cabeça da Lista</a></li>
+            <li><a href="">Inserção em uma Lista Encadeada</a></li>
+            <li><a href="">Remoção em uma Lista Encadeada</a></li>
             <li><a href="">Lista de Exercícios Completa</a></li>
             <li><a href="">Repositório GitHub</a></li>
         </ul>
     </div>
 
-    <h2>Estrutura da Lista Encadeada</h2>
+    
     <div id="estrutura">
+        <h2>Estrutura da Lista Encadeada</h2>
         <p>Apenas recapitulando a parte inicial, Lista Encadeadas é uma sequência de células; cada célula contém um
             objeto(Lembrando que todos do mesmo tipo)
             e o endereço da célula seguinte. Então, abaixo veja o código da declaração da Estrutura da Lista.
@@ -50,10 +54,10 @@
         <div class="code1">
             <pre>
                  <code>
-                    struct TipoLista {
-                           int valor;//Ou seja, o contéudo da célula, o seu valor.
-                           struct TipoLista *proximo;//"Aponta", ponteiro.
-                    };
+         struct TipoLista {
+                int valor;//Ou seja, o contéudo da célula, o seu valor.
+                struct TipoLista *proximo;//"Aponta", ponteiro.
+        };
                  </code>
            </pre>
         </div>
@@ -74,12 +78,13 @@
             Se p é um ponteiro, então, p->valor é o contéudo da célula e p->proximo aponta pra próxima célula, E quando chegar na última célula ela irá apontar pra NULL,
             pois não há nada. Então, a última célula é se e somente se p->proximo == NULL.</p>
     
-            <img src="/Listas Encadeadas/Site Contéudo/imagens/img2.png" alt="Abstração 2">
+            <img src="/Listas Encadeadas/Site Contéudo/imagens/img2.png" style="margin-top: 20px; margin-bottom: 50px;" alt="Abstração 2">
     </div>
 
-    <h2>Endereço de uma Lista Encadeada</h2>
+    
     <div id="endereco">
-        <p>O endereço de uma lista encadeada é o endereço de sua primeira célula. <strong>Considere que le é lista encadeada.</strong>
+        <h2>Endereço de uma Lista Encadeada</h2>
+        <p>O endereço de uma lista encadeada é o endereço de sua primeira célula. <strong>Considere que le é uma lista encadeada.</strong>
         A lista está vazia se e somente le == NULL, isso quer dizer, a lista não possui células.</p>
 
         <p>OBSERVAÇÃO: Listas são tendeciosas à funções e à procedimentos recursivos, geralmente, os algoritmos de lista encadeada ficam mais simples, otimizados com 
@@ -102,11 +107,91 @@
                 }
               }
         </code></pre>
+    </div>
 
+    <div id="busca">
+        <h2>Busca em uma Lista Encadeada</h2>
+        <p>A ideia principal desse tópico é a busca em uma Lista Encadeada, ou seja, a busca de um elemento x na minha Lista e saber se ele pertence ou não a ela.</p>
+        <pre><code>
+//Função que retorna se um valor está na lista ou não.
+//Se sim retorna o numero(tamanho) da célula, Se não retorna 0, ou seja, o valor não foi encontrado.
+            int buscaElemento(int num, struct TipoLista *p){
+	             int contador=0;
+	             while(p->proximo != NULL && p->valor != num){
+		         p = p->proximo;
+		         contador++;
+	             }
+	             if(p->valor == num){
+		                return contador;
+	             }else{
+	                    return 0; //False, nao encontrou o valor.
+	             }
+            }
+
+        </code></pre>
+        <p>Iniciamos o contador com 0 para que a cada laço do loop seja iterado +1 no seu valor, pois assim retorna em qual célula o elemento estará caso ele estiver na lista. O laço WHILE continua até que o ponteiro não aponte para uma célula vazia e que o valor da célula seja diferente do valor que queremos achar.</p>
+    </div>
+
+    <div id="cabeca">
+        <h2>Cabeça da Lista - HEAD CELL</h2>
+        <p>Convém tratar a primeira célula de uma lista encadeada como um mero "marcador de início" e ignorar o contéudo da célula. A primeira célula é a cabeça.<br><mark>head cell = dunny cell.</mark></p>
+
+        <p>Uma Lista Encadeada está vazia se e somente se <mark>le->proximo == NULL</mark>. Para criar uma Lista Encadeada vazia com cabeça, basta dizer:</p>
+
+        <pre><code>
+            TipoLista *le;
+            le = malloc(sizeof(lista));
+            le->proximo = NULL;
+        </code></pre>
+        <p>A função malloc aloca dinamicamente memória para o Novo Nó de acordo com o sizeof da Estrutura.</p>
+        <p>Constantemente a head da lista é alterada, no exemplo que produzi a cada criação de um nó a cabeça muda, ainda que a lista não seja uma estrutura LIFO(last-in first-out) mas a cabeça indica o último que entrou.</p>
+        
+        <pre><code>
+        for(i=1; i<=6; i++){
+            struct TipoLista *NovoNo = malloc(sizeof(lista));
+            NovoNo->valor = i*10;
+            NovoNo->proximo = le->proximo;//Insere o nó no início da lista.
+            le->proximo = NovoNo;//Atualiza a HEAD da lista, antes era NULL e agora é o NovoNo.
+        }
+        </code></pre>
+    </div>
+
+    <div id="insere">
+        <h2>Inserção em uma Lista Encadeada</h2>
+        <p>Suponha que quero inserir a nova célula entre a posição apontada por p e a posição seguinte. Considere o problema de inserir uma nova célula em uma Lista Encadeada. Só faz sentido se P é diferente de NULL.</p>
+        <p>Em tese, a inserção segue a mesma estrutura de código da mudança de cabeça da lista e adição de elementos.</p>
+
+        <pre><code>
+        //Função que insere uma nova célula na LE.
+        void insere(int x, lista *p){
+            lista *nova;
+            nova = malloc(sizeof(lista));
+            nova->valor = x;
+            nova->proximo = p->proximo;
+            p->proximo = nova;
+        }
+        </code></pre>
+        <p>No caso acima, inserimos a nova célula no início da Lista, mas se o p->prox==NULL então inserimos a nova célula no fim da lista.</p>
+        <p><mark>Então, temos duas opções, Insere na cabeça da Lista ou insere no final da Lista.</mark></p>
+    </div>
+
+    <div id="remove">
+        <h2>Remoção em uma Lista Encadeada</h2>
+        <p>Considere o problema de remover uma certa célula de uma Lista Encadeada. Como especificar a célula em questão? A ideia mais óbvia é apontar para a célula que quero remover. Mas é fácil perceber que essa ideia não é boa, é melhor apontar para a célula anterior à que remover.
+            Veja que por esse método não é possível remover a primeira célula, ou se p == NULL ou p->proximo==NULL.
+        </p>
+        <pre><code>
+        //Esta função recebe o endereço p de uma célula de uma LE e remove da lista a p->prox.
+        void remove(celula *p){
+            celula *lixo;
+            lixo = p->proximo;
+            p->proximo = lixo->proximo;
+            free(lixo);
+        }</code></pre>
+        <p>A função <mark>free</mark> desaloca o espaço de memória daquela variável, no caso em que estamos trabalhando é a célula da Lista.</p>
     </div>
 
 
-    
 </body>
 
 </html>
