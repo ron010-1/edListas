@@ -6,6 +6,9 @@ Esse é um repositório que aborda um tópico de Estrutura de Dados, mais especi
 - PASTA SITE: Possui o código feito com HTML, CSS.
 - Lista de Exercícios em PDF.
 
+## Site
+- <a href="https://edlistas.netlify.app/">Link do Site com Explicação.</a>
+
 ## Referências
 - Instituto Militar de Engenharia(IME), estudo: Listas Encadeadas
 - Canal do Youtube: de Aluno para Aluno
